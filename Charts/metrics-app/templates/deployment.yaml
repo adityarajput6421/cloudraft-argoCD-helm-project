@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudraft-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudraft-app
+  template:
+    metadata:
+      labels:
+        app: cloudraft-app
+    spec:
+      containers:
+        - name: cloudraft-app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudraft-app-secret
+                  key: password
