@@ -10,5 +10,6 @@ ingress:
   enabled: true
   host: metrics.local
 
-env:
-  PASSWORD: MYPASSWORD
+envFrom:
+  -secretRef:
+     PASSWORD: password
